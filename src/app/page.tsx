@@ -108,7 +108,7 @@ export default function Home() {
           variants={fadeInUp}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <span className='text-[#EBB198]'>Hi.</span> I'm Toby<br />
+          <span className='text-[#EBB198]'>Hi.</span> I&apos;m Toby<br />
         </motion.h1>
         <motion.a 
           href="#about-section" 
