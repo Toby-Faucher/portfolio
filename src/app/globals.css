@@ -1,26 +1,97 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Remove all other default styles */
+
+body {
+  background-color: #010203; /* Very dark base */
+  background-image:
+    /* Glow effect - even larger size and lower opacity for smoother blend */
+    radial-gradient(circle at 20% 20%, rgba(152, 210, 235, 0.32), transparent 30%), /* Blueish - lower opacity */
+    radial-gradient(circle at 10% 50%, rgba(235, 177, 152, 0.32), transparent 20%), /* Peach/Orange - lower opacity */
+    radial-gradient(circle at 50% 90%, rgba(152, 235, 177, 0.48), transparent 65%),  /* Greenish - lower opacity */
+    radial-gradient(circle at 10% 90%, rgba(152, 210, 235, 0.22), transparent 65%),  /* Greenish - lower opacity */
+    /* Grid pattern */
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size:
+    350% 350%, /* Radial 1 - Even Larger size */
+    350% 350%, /* Radial 2 - Even Larger size */
+    350% 350%, /* Radial 3 - Larger size */
+    350% 350%,
+    100px 100px, /* Grid size */
+    100px 100px; /* Grid size */
+  background-position: /* Ensure positions match the number of layers */
+    0 0,
+    0 0,
+    0 0,
+    -1px -1px, /* Grid Offset */
+    -1px -1px; /* Grid Offset */
+  color: #ededed; /* Light text color for contrast */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html, body {
+  height: 100%; /* Ensure body takes full height */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Animated Border Styles */
+@keyframes rotate-border {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Remove old dash-move keyframes */
+/* @keyframes dash-move {
+  to {
+    background-position: 20px 0, 0 20px, -20px 0, 0 -20px;
+  }
+} */
+
+/* Offset border effect */
+.animated-border-box {
+  position: relative;
+  padding: 0; /* Remove padding as we'll handle it with ::before */
+  z-index: 1;
+  transform: rotate(-4deg); /* Slight counter-clockwise tilt */
+}
+
+/* First (back) border - will be visible underneath */
+.animated-border-box::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  right: -12px;
+  bottom: -12px;
+  background-color: #98D2EB; /* Dark background */
+  border: 1px solid #98D2EB; /* Blue border */
+  border-radius: 12px;
+  z-index: -1;
+  transform: rotate(10deg); /* Rotate slightly */
+}
+
+/* Second (front) border - positioned on top */
+.animated-border-box::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background-color: #EBB198; /* Transparent background */
+  border: 1px solid #EBB198; /* Blue border */
+  border-radius: 12px;
+  z-index: -1;
+  transform: rotate(-5deg); /* Different rotation for offset effect */
+}
+
+/* Make sure image container stays properly aligned */
+.animated-border-box > div {
+  transform: rotate(4deg); /* Counter the parent rotation */
+  background-color: transparent; /* Match page background */
+  border-radius: 8px; /* Rounded corners for content */
+  overflow: hidden; /* Keep image within bounds */
 }
